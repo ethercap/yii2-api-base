@@ -1,0 +1,41 @@
+{
+  "name": "ethercap/apiBase",
+  "description": "内部接口规范和推荐实现",
+  "type": "yii2-extension",
+  "minimum-stability": "stable",
+  "authors": [
+    {
+      "name": "cuizhihua",
+      "email": "cuizhihua@ethercap.com"
+    },
+    {
+      "name": "zhangdong",
+      "email": "zhangdong@ethercap.com"
+    }
+  ],
+  "require": {
+    "yiisoft/yii2": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "ethercap\\apiBase\\": "src"
+    }
+  },
+  "repositories": {
+    "0": {
+      "type": "composer",
+      "url": "https://satis.ethercap.com"
+    },
+    "1": {
+      "type": "composer",
+      "url": "https://asset.dev.ethercap.com"
+    },
+    "packagist": {
+      "type": "composer",
+      "url": "https://packagist.laravel-china.org"
+    }
+  },
+  "require-dev": {
+    "phpdocumentor/phpdocumentor": "dev-master"
+  }
+}
