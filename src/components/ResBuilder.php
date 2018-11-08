@@ -11,6 +11,8 @@ class ResBuilder extends Component
     protected $_data;
     protected $_fields = [];
 
+    protected $errors = [];
+
     public $rtData;
 
     public $template = [
@@ -102,5 +104,10 @@ class ResBuilder extends Component
             }
             $this->rtData[$field] = $value;
         }
+    }
+
+    public function pushError($model)
+    {
+        array_push($this->errors, $model);
     }
 }

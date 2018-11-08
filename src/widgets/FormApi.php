@@ -2,10 +2,6 @@
 
 namespace ethercap\apiBase\widgets;
 
-class FormApi extends Widget
+class FormApi extends DetailApi
 {
-    public function run()
-    {
-        return [2, 3, 4, 5];
-    }
 }

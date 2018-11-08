@@ -5,9 +5,23 @@ namespace ethercap\apiBase\widgets;
 use Yii;
 use yii\base\Widget as BaseWidget;
 use yii\base\InvalidCallException;
+use yii\base\InvalidConfigException;
 
 class Widget extends BaseWidget
 {
+    /**
+     * @var \ethercap\apiBase\components\ResBuilder;
+     */
+    public $builder;
+
+    public function init()
+    {
+        parent::init();
+        if ($this->builder === null) {
+            throw new InvalidConfigException('The "builder" property must be set.');
+        }
+    }
+
     final public static function begin($config = [])
     {
         throw new InvalidCallException();

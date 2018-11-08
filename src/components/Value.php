@@ -48,25 +48,25 @@ class Value extends Component
      */
     public function widget($class, $config)
     {
-        $this->ret = Yii::createObject(['class' => $class] + $config);
+        $this->ret = Yii::createObject(['class' => $class, 'builder' => $this->builder] + $config);
         return $this;
     }
 
     public function list($config)
     {
-        $this->ret = Yii::createObject(['class' => $this->listWidget] + $config);
+        $this->ret = Yii::createObject(['class' => $this->listWidget, 'builder' => $this->builder] + $config);
         return $this;
     }
 
     public function detail($config)
     {
-        $this->ret = Yii::createObject(['class' => $this->detailWidget] + $config);
+        $this->ret = Yii::createObject(['class' => $this->detailWidget, 'builder' => $this->builder] + $config);
         return $this;
     }
 
     public function form($config)
     {
-        $this->ret = Yii::createObject(['class' => $this->formWidget] + $config);
+        $this->ret = Yii::createObject(['class' => $this->formWidget, 'builder' => $this->builder] + $config);
         return $this;
     }
 }
