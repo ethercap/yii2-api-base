@@ -1,10 +1,10 @@
 <?php
 
-namespace ethercap\apiBase\components;
+namespace ethercap\apiBase;
 
-use yii\web\View as YiiView;
+use yii\web\View as BaseView;
 
-class View extends YiiView
+class View extends BaseView
 {
     public function renderApi($view, $params = [], $context = null)
     {

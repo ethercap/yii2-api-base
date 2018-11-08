@@ -31,6 +31,11 @@ class ResBuilder extends Component
         return $res;
     }
 
+    /**
+     * @param null  $value
+     * @param array $default
+     * @return Value|null
+     */
     public function data($value = null, $default = [])
     {
         if ($value !== null) {
@@ -40,6 +45,12 @@ class ResBuilder extends Component
         }
     }
 
+    /**
+     * @param null  $key
+     * @param null  $value
+     * @param array $default
+     * @return Value|null
+     */
     public function field($key = null, $value = null, $default = [])
     {
         if ($key === null) {

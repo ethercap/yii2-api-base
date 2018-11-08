@@ -3,7 +3,6 @@
 namespace ethercap\apiBase;
 
 use yii\di\Instance;
-use ethercap\apiBase\components\View;
 use ethercap\apiBase\components\ResBuilder;
 use yii\base\ViewRenderer as BaseViewRenderer;
 

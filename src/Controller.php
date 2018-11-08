@@ -2,9 +2,9 @@
 
 namespace ethercap\apiBase;
 
-use yii\web\Controller as YiiController;
+use yii\web\Controller as BaseController;
 
-class Controller extends YiiController
+class Controller extends BaseController
 {
     public function renderApi($view, $params = [])
     {
@@ -16,7 +16,7 @@ class Controller extends YiiController
      * The [[render()]], [[renderPartial()]] and [[renderFile()]] methods will use
      * this view object to implement the actual view rendering.
      * If not set, it will default to the "view" application component.
-     * @return \ethercap\apiBase\components\View|\yii\web\View the view object that can be used to render views or view files.
+     * @return \ethercap\apiBase\View|\yii\web\View the view object that can be used to render views or view files.
      */
     public function getView()
     {

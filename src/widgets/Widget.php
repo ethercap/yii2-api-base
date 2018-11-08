@@ -1,12 +1,12 @@
 <?php
 
-namespace ethercap\apiBase\components;
+namespace ethercap\apiBase\widgets;
 
 use Yii;
-use yii\base\Widget as YiiWidget;
+use yii\base\Widget as BaseWidget;
 use yii\base\InvalidCallException;
 
-class Widget extends YiiWidget
+class Widget extends BaseWidget
 {
     final public static function begin($config = [])
     {
@@ -18,6 +18,11 @@ class Widget extends YiiWidget
         throw new InvalidCallException();
     }
 
+    /**
+     * @param array $config
+     * @return mixed
+     * @throws \Exception
+     */
     public static function widget($config = [])
     {
         ob_start();
@@ -40,5 +45,10 @@ class Widget extends YiiWidget
         }
 
         return $out;
+    }
+
+    public function renderApi($view, $params = [], $context = null)
+    {
+        return $this->getView()->render($view, $params, $this);
     }
 }
