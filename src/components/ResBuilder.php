@@ -14,6 +14,10 @@ class ResBuilder extends Component
     protected $errors = [];
 
     public $rtData;
+    public $errCode = 2;
+    public $errMessage = '操作失败';
+    public $errorHandler;
+    public $errRes;
 
     public $template = [
         'code' => '{code}',
@@ -30,6 +34,9 @@ class ResBuilder extends Component
                 $v = $this->{'get' . ucfirst($matches[1])}();
             }
         });
+        if ($this->errorHandler && $this->errors && is_callable($this->errorHandler)) {
+            return call_user_func($this->errorHandler, array_pop($this->errors));
+        }
         return $res;
     }
 
@@ -66,12 +73,33 @@ class ResBuilder extends Component
 
     protected function getCode()
     {
-        return $this->_code ?: 0;
+        $this->getData();
+        if (!$this->errors) {
+            return  0;
+        } else {
+            return $this->errCode;
+        }
     }
 
     protected function getMessage()
     {
-        return $this->_message ?: '操作成功';
+        $this->getData();
+        if (!$this->errors) {
+            return  '成功';
+        } else {
+            return $this->errMessage;
+        }
+    }
+
+    protected $errModel;
+
+    protected function getErrModel()
+    {
+        if ($this->errModel !== null) {
+            return $this->errModel;
+        }
+        $this->errModel = array_pop($this->errors);
+        return $this->errModel;
     }
 
     protected function getData()
