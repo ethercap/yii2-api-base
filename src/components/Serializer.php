@@ -23,15 +23,15 @@ class Serializer extends BaseSerializer
      * 配置这个属性后会返回全部可用排序信息，（不依赖collectionEnvelope，schema 并不是列表属性，
      * 而是detail的属性，准确的说只有一个model或者form才有schema）。
      */
-    public $schemaEnvelope;
-
-    public $schemaParam = 'schema';
+    public $rulesParam = 'withConfig';
 
     public $columns = [];
 
     public $errInstance;
 
     public $formatter;
+
+    protected $canAddConfig = true;
 
     public function init()
     {
@@ -58,12 +58,7 @@ class Serializer extends BaseSerializer
 
     protected function serializeModel($model)
     {
-        $result = $this->normalizeAttributes($model);
-        if ($this->schemaEnvelope && $this->request->get('schema')) {
-            return array_merge($result, $this->serializeSchema($model));
-        } else {
-            return $result;
-        }
+        return $this->normalizeAttributes($model);
     }
 
     protected function serializeModelErrors($model)
@@ -77,14 +72,14 @@ class Serializer extends BaseSerializer
 
     protected function serializeDataProvider($dataProvider)
     {
+        $this->canAddConfig = false;
         $result = parent::serializeDataProvider($dataProvider);
         if (is_array($result) && array_key_exists($this->collectionEnvelope, $result)) {
             if ($this->sortEnvelope && ($sorter = $dataProvider->getSort()) !== false) {
                 return array_merge($result, $this->serializeSorter($sorter));
-            } else {
-                return $result;
             }
         }
+        return $result;
     }
 
     protected function serializeSorter(Sort $sorter)
@@ -95,11 +90,6 @@ class Serializer extends BaseSerializer
             $ret[$attribute] = $sorter->createUrl($attribute);
         }
         return [$this->sortEnvelope => $ret];
-    }
-
-    protected function serializeSchema($model)
-    {
-        return [$this->schemaEnvelope => Schema::build($model)];
     }
 
     protected function normalizeAttributes($model)
@@ -120,13 +110,14 @@ class Serializer extends BaseSerializer
         $ret = [];
         foreach ($this->columns as $i => $attribute) {
             if (is_string($attribute)) {
-                if (!preg_match('/^([^:]+)(:(\w*))?(:(.*))?$/', $attribute, $matches)) {
+                if (!preg_match('/^([^:]+)(:(\w*))?(:(.*))?(:(\w*))?$/', $attribute, $matches)) {
                     throw new InvalidConfigException('The attribute must be specified in the format of "attribute", "attribute:format" or "attribute:format:label"');
                 }
                 $attribute = [
                     'attribute' => $matches[1],
                     'format' => isset($matches[3]) ? $matches[3] : 'raw',
                     'label' => isset($matches[5]) ? $matches[5] : null,
+                    'rules' => isset($matches[7]) ? $matches[7] : null,
                 ];
             }
 
@@ -137,11 +128,21 @@ class Serializer extends BaseSerializer
             if (!isset($attribute['format'])) {
                 $attribute['format'] = 'raw';
             }
+
+            if (!isset($attribute['rules']) || !$this->canAddConfig) {
+                unset($attribute['rules']);
+            }
+
             if (isset($attribute['attribute'])) {
                 $attributeName = $attribute['attribute'];
                 if (!isset($attribute['label'])) {
                     $attribute['label'] = $model instanceof Model ? $model->getAttributeLabel($attributeName) : Inflector::camel2words($attributeName, true);
                 }
+
+                if (!isset($attribute['rules']) && Yii::$app->request->get($this->rulesParam) && $this->canAddConfig) {
+                    $attribute['rules'] = Schema::buildField($model, $attribute['attribute']);
+                }
+
                 if (!array_key_exists('value', $attribute)) {
                     $attribute['value'] = ArrayHelper::getValue($model, $attributeName);
                 }
@@ -155,6 +156,7 @@ class Serializer extends BaseSerializer
 
             $key = ArrayHelper::remove($attribute, 'attribute');
             $format = ArrayHelper::remove($attribute, 'format');
+            $this->formatter->nullDisplay = null;
             $attribute['value'] = $this->formatter->format($attribute['value'], $format);
             if (is_numeric($i)) {
                 $ret[$key] = $attribute;

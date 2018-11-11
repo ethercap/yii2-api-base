@@ -16,7 +16,6 @@ class ListApi extends Widget
         'linksEnvelope' => 'links',
         'metaEnvelope' => 'meta',
         'sortEnvelope' => 'sort',
-        'schemaEnvelope' => 'schema',
     ];
 
     /**

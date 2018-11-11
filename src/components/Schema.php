@@ -27,6 +27,16 @@ class Schema extends Component
     }
 
     /**
+     * @param Model $model
+     * @param string $field
+     * @return array;
+     */
+    public static function buildField($model, $field)
+    {
+        return self::getValidators($model->getActiveValidators($field), $field);
+    }
+
+    /**
      * @param \yii\validators\Validator $validators
      * @param $field
      * @return array

@@ -12,7 +12,6 @@ class DetailApi extends Widget
     public $serializer = Serializer::class;
 
     public $serializerOptions = [
-        'schemaEnvelope' => 'schema',
     ];
 
     /**
