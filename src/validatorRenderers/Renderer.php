@@ -4,6 +4,7 @@ namespace ethercap\apiBase\validatorRenderers;
 
 use yii\base\Component;
 use yii\validators\Validator;
+use yii\validators\InlineValidator;
 
 class Renderer extends Component
 {
@@ -15,6 +16,9 @@ class Renderer extends Component
      */
     public static function render($validator, $model, $field)
     {
+        if ($validator instanceof InlineValidator) {
+            return [];
+        }
         $type = self::getType($validator);
         return [
             'type' => $type,
