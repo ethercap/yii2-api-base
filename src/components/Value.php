@@ -41,7 +41,7 @@ class Value extends Component
     }
 
     /**
-     * @param Widget $class
+     * @param  $class
      * @param $config
      * @return mixed
      * @throws
