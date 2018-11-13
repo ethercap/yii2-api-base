@@ -18,7 +18,9 @@ class Schema extends Component
         $validators = $model->getActiveValidators($field);
         $ret = [];
         foreach ($validators as $validator) {
-            $ret[] = self::toArray($validator, $model, $field);
+            if ($rule = self::toArray($validator, $model, $field)) {
+                $ret[] = $rule;
+            }
         }
         return $ret;
     }

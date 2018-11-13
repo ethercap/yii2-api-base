@@ -19,7 +19,7 @@ class DetailApi extends Widget
      */
     private $_serializer;
 
-    public $columns = [];
+    public $columns;
 
     /**
      * Initializes the Api.
@@ -28,9 +28,10 @@ class DetailApi extends Widget
     {
         parent::init();
         if ($this->model === null) {
-            throw new InvalidConfigException('The "dataProvider" property must be set.');
+            throw new InvalidConfigException('The "model" property must be set.');
         }
-        $this->_serializer = new $this->serializer($this->serializerOptions + ['columns' => $this->columns]);
+        $this->_serializer = new $this->serializer($this->serializerOptions
+            + ['columns' => $this->columns] + ['useModelResponse' => $this->useModelResponse]);
     }
 
     public function run()

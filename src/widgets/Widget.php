@@ -14,6 +14,8 @@ class Widget extends BaseWidget
      */
     public $builder;
 
+    public $useModelResponse;
+
     public function init()
     {
         parent::init();

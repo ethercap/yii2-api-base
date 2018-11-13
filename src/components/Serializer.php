@@ -15,6 +15,8 @@ use yii\i18n\Formatter;
 
 class Serializer extends BaseSerializer
 {
+    public $useModelResponse;
+
     /**
      * 配置这个属性后会返回全部可用排序信息，依赖collectionEnvelope，如果collectionEnvelope不配置则不会返回附加信息。
      */
@@ -23,9 +25,9 @@ class Serializer extends BaseSerializer
      * 配置这个属性后会返回全部可用排序信息，（不依赖collectionEnvelope，schema 并不是列表属性，
      * 而是detail的属性，准确的说只有一个model或者form才有schema）。
      */
-    public $rulesParam = 'withConfig';
+    public $configParam = 'withConfig';
 
-    public $columns = [];
+    public $columns;
 
     public $errInstance;
 
@@ -106,7 +108,15 @@ class Serializer extends BaseSerializer
             }
             sort($this->columns);
         }
+        if ($this->useModelResponse) {
+            return $this->normalizeModelResponse($model);
+        } else {
+            return $this->normalizeResponse($model);
+        }
+    }
 
+    protected function normalizeModelResponse($model)
+    {
         $ret = [];
         foreach ($this->columns as $i => $attribute) {
             if (is_string($attribute)) {
@@ -133,21 +143,25 @@ class Serializer extends BaseSerializer
                 unset($attribute['rules']);
             }
 
+            if (!isset($attribute['label']) || !$this->canAddConfig) {
+                unset($attribute['label']);
+            }
+
             if (isset($attribute['attribute'])) {
                 $attributeName = $attribute['attribute'];
-                if (!isset($attribute['label'])) {
+                if (!isset($attribute['label']) && Yii::$app->request->get($this->configParam) && $this->canAddConfig) {
                     $attribute['label'] = $model instanceof Model ? $model->getAttributeLabel($attributeName) : Inflector::camel2words($attributeName, true);
                 }
 
-                if (!isset($attribute['rules']) && Yii::$app->request->get($this->rulesParam) && $this->canAddConfig) {
+                if (!isset($attribute['rules']) && Yii::$app->request->get($this->configParam) && $this->canAddConfig) {
                     $attribute['rules'] = Schema::buildField($model, $attribute['attribute']);
                 }
 
                 if (!array_key_exists('value', $attribute)) {
                     $attribute['value'] = ArrayHelper::getValue($model, $attributeName);
                 }
-            } elseif (!isset($attribute['label']) || !array_key_exists('value', $attribute)) {
-                throw new InvalidConfigException('The attribute configuration requires the "attribute" element to determine the value and display label.');
+            } elseif (!array_key_exists('value', $attribute)) {
+                throw new InvalidConfigException('The attribute configuration requires the "attribute" element to determine the value.');
             }
 
             if ($attribute['value'] instanceof \Closure) {
@@ -162,6 +176,54 @@ class Serializer extends BaseSerializer
                 $ret[$key] = $attribute;
             } else {
                 $ret[$i] = $attribute;
+            }
+        }
+        return $ret;
+    }
+
+    protected function normalizeResponse($model)
+    {
+        $ret = [];
+        foreach ($this->columns as $i => $attribute) {
+            if (is_string($attribute)) {
+                if (!preg_match('/^([^:]+)(:(\w*))?(:(.*))?(:(\w*))?$/', $attribute, $matches)) {
+                    throw new InvalidConfigException('The attribute must be specified in the format of "attribute", "attribute:format" or "attribute:format:label"');
+                }
+                $attribute = [
+                    'attribute' => $matches[1],
+                    'format' => isset($matches[3]) ? $matches[3] : 'raw',
+                ];
+            }
+
+            if (!is_array($attribute)) {
+                throw new InvalidConfigException('The attribute configuration must be an array.');
+            }
+
+            if (!isset($attribute['format'])) {
+                $attribute['format'] = 'raw';
+            }
+
+            if (isset($attribute['attribute'])) {
+                $attributeName = $attribute['attribute'];
+                if (!array_key_exists('value', $attribute)) {
+                    $attribute['value'] = ArrayHelper::getValue($model, $attributeName);
+                }
+            } elseif (!array_key_exists('value', $attribute)) {
+                throw new InvalidConfigException('The attribute configuration requires the "attribute" element to determine the value.');
+            }
+
+            if ($attribute['value'] instanceof \Closure) {
+                $attribute['value'] = call_user_func($attribute['value'], $model, $this);
+            }
+
+            $key = ArrayHelper::remove($attribute, 'attribute');
+            $format = ArrayHelper::remove($attribute, 'format');
+            $this->formatter->nullDisplay = null;
+            $attribute['value'] = $this->formatter->format($attribute['value'], $format);
+            if (is_numeric($i)) {
+                $ret[$key] = $attribute['value'];
+            } else {
+                $ret[$i] = $attribute['value'];
             }
         }
         return $ret;
