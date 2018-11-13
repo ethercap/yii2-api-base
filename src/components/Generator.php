@@ -17,7 +17,7 @@ use yii\helpers\VarDumper;
 use yii\web\Controller;
 
 /**
- * Generates CRUD
+ * Generates API
  *
  * @property array $columnNames Model column names. This property is read-only.
  * @property string $controllerID The controller ID (without the module ID prefix). This property is
@@ -50,7 +50,7 @@ class Generator extends \yii\gii\Generator
      */
     public function getName()
     {
-        return 'CRUD Generator';
+        return 'Api Generator';
     }
 
     /**
@@ -58,8 +58,7 @@ class Generator extends \yii\gii\Generator
      */
     public function getDescription()
     {
-        return 'This generator generates a controller and views that implement CRUD (Create, Read, Update, Delete)
-            operations for the specified data model.';
+        return 'api generator';
     }
 
     /**
