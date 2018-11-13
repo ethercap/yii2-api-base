@@ -6,7 +6,7 @@ class ConfigHelper
     {
         $config = [
             'api' => [
-                'class' => 'yii\gii\generators\crud\Generator',
+                'class' => 'ethercap\apiBase\components\Generator',
                 'templates' => [
                     'default' => '@vendor/ethercap/apiBase/src/template/api',
                 ],
