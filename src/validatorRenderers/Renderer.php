@@ -3,8 +3,17 @@
 namespace ethercap\apiBase\validatorRenderers;
 
 use yii\base\Component;
+use yii\captcha\CaptchaValidator;
+use yii\validators\EachValidator;
+use yii\validators\ExistValidator;
 use yii\validators\Validator;
+use yii\validators\DefaultValueValidator;
+use yii\validators\FileValidator;
+use yii\validators\FilterValidator;
+use yii\validators\ImageValidator;
 use yii\validators\InlineValidator;
+use yii\validators\SafeValidator;
+use yii\validators\UniqueValidator;
 
 class Renderer extends Component
 {
@@ -16,7 +25,17 @@ class Renderer extends Component
      */
     public static function render($validator, $model, $field)
     {
-        if ($validator instanceof InlineValidator) {
+        if ($validator instanceof InlineValidator
+        || $validator instanceof FilterValidator
+        || $validator instanceof FileValidator
+        || $validator instanceof ImageValidator
+        || $validator instanceof SafeValidator
+        || $validator instanceof UniqueValidator
+        || $validator instanceof DefaultValueValidator
+        || $validator instanceof EachValidator
+        || $validator instanceof ExistValidator
+        || $validator instanceof CaptchaValidator
+        ) {
             return [];
         }
         return [

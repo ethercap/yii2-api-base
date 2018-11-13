@@ -1,0 +1,22 @@
+<?php
+use ethercap\apiBase\components\ResBuilder;
+use yii\data\ActiveDataProvider;
+use backend\models\ProjectSearch;
+use ethercap\apiBase\widgets\DetailApi;
+use ethercap\apiBase\widgets\ListApi;
+
+/* @var $res ResBuilder*/
+/* @var $dataProvider ActiveDataProvider */
+/* @var $searchModel ProjectSearch*/
+
+$res->data()->widget(ListApi::class, [
+    'useModelResponse' => true,
+    'dataProvider' => $dataProvider,
+    'columns' => require 'columns.php'
+]);
+
+$res->field('params')->widget(DetailApi::class, [
+    'useModelResponse' => true,
+    'model' => $searchModel,
+    'columns' => require 'search_columns.php'
+]);

@@ -160,8 +160,8 @@ class Serializer extends BaseSerializer
                 if (!array_key_exists('value', $attribute)) {
                     $attribute['value'] = ArrayHelper::getValue($model, $attributeName);
                 }
-            } elseif (!isset($attribute['label']) || !array_key_exists('value', $attribute)) {
-                throw new InvalidConfigException('The attribute configuration requires the "attribute" element to determine the value and display label.');
+            } elseif (!array_key_exists('value', $attribute)) {
+                throw new InvalidConfigException('The attribute configuration requires the "attribute" element to determine the value.');
             }
 
             if ($attribute['value'] instanceof \Closure) {
@@ -209,7 +209,7 @@ class Serializer extends BaseSerializer
                     $attribute['value'] = ArrayHelper::getValue($model, $attributeName);
                 }
             } elseif (!array_key_exists('value', $attribute)) {
-                throw new InvalidConfigException('The attribute configuration requires the "attribute" element to determine the value and display label.');
+                throw new InvalidConfigException('The attribute configuration requires the "attribute" element to determine the value.');
             }
 
             if ($attribute['value'] instanceof \Closure) {

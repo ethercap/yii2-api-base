@@ -12,7 +12,7 @@ class Json extends BaseJson
         if (is_object($data)) {
             if ($data instanceof JsExpression) {
                 $token = "!{[$expPrefix=" . count($expressions) . ']}!';
-                $expressions['"' . $token . '"'] = '"' . addslashes($data->expression) . '"';
+                $expressions['"' . $token . '"'] = trim(json_encode($data->expression), '[]');
                 return $token;
             } elseif ($data instanceof \JsonSerializable) {
                 return static::processData($data->jsonSerialize(), $expressions, $expPrefix);
