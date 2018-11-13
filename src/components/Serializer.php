@@ -127,7 +127,7 @@ class Serializer extends BaseSerializer
                     'attribute' => $matches[1],
                     'format' => isset($matches[3]) ? $matches[3] : 'raw',
                     'label' => isset($matches[5]) ? $matches[5] : null,
-                    'rules' => isset($matches[7]) ? $matches[7] : null,
+                    'rules' => isset($matches[7]) ? (array) $matches[7] : null,
                 ];
             }
 
