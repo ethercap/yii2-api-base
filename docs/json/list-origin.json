@@ -1,0 +1,287 @@
+{
+  "code": 0,
+  "message": "成功",
+  "data": {
+    "items": [
+      {
+        "id": 14,
+        "title": "213135",
+        "vendorId": 209,
+        "logoUrl": "http://file.dev.ethercap.com/ether-public/icon/1432376477.png",
+        "viewCount": "2",
+        "meetingCount": "8",
+        "interestedCount": 0,
+        "vendorName": "无",
+        "agents": []
+      },
+      {
+        "id": 25,
+        "title": "13f13vf13",
+        "vendorId": 25,
+        "logoUrl": "http://file.dev.ethercap.com/ether-public/icon/1437446381.png",
+        "viewCount": "1",
+        "meetingCount": "0",
+        "interestedCount": 0,
+        "vendorName": "vendor.name.id:25",
+        "agents": []
+      },
+      {
+        "id": 45,
+        "title": "我就是试试",
+        "vendorId": 87,
+        "logoUrl": "http://file.dev.ethercap.com/ether-public/icon/logo_Njg0MV8xNDMyMDQ4MjM1.png",
+        "viewCount": "8",
+        "meetingCount": "37",
+        "interestedCount": 1,
+        "vendorName": "无",
+        "agents": []
+      },
+      {
+        "id": 95,
+        "title": "浏览器",
+        "vendorId": 8,
+        "logoUrl": "http://file.dev.ethercap.com/ether-public/icon/logo_MTMzMV8xNDMxOTQwNzMz.png",
+        "viewCount": "2",
+        "meetingCount": "0",
+        "interestedCount": 0,
+        "vendorName": "vendor.name.id:8",
+        "agents": []
+      },
+      {
+        "id": 100,
+        "title": "aaaaaaaaa",
+        "vendorId": 0,
+        "logoUrl": "http://file.dev.ethercap.com/ether-public/icon/1488433272328.png",
+        "viewCount": "0",
+        "meetingCount": "0",
+        "interestedCount": 0,
+        "vendorName": "无",
+        "agents": [
+          "汤可因2"
+        ]
+      },
+      {
+        "id": 109,
+        "title": "ssssssssssssssssddddddddddddddd",
+        "vendorId": 21,
+        "logoUrl": "http://file.dev.ethercap.com/ether-public/file.dev.ethercap.com/ether-public/icon/1488433272328.png",
+        "viewCount": "0",
+        "meetingCount": "0",
+        "interestedCount": 0,
+        "vendorName": "vendor.name.id:21",
+        "agents": [
+          "线下测试"
+        ]
+      },
+      {
+        "id": 111,
+        "title": "ran70",
+        "vendorId": 0,
+        "logoUrl": "http://file.dev.ethercap.com/ether-public/file.dev.ethercap.com/ether-public/icon/1488433272328.png",
+        "viewCount": "0",
+        "meetingCount": "0",
+        "interestedCount": 0,
+        "vendorName": "无",
+        "agents": []
+      },
+      {
+        "id": 163,
+        "title": "小米",
+        "vendorId": 18,
+        "logoUrl": "http://file.dev.ethercap.com/ether-public/icon/1488433272328.png",
+        "viewCount": "13",
+        "meetingCount": "0",
+        "interestedCount": 0,
+        "vendorName": "vendor.name.id:18",
+        "agents": [
+          "汤可因2"
+        ]
+      },
+      {
+        "id": 205,
+        "title": "Ghhh",
+        "vendorId": 1,
+        "logoUrl": "http://admin.ethercap.com/upload/icon/1442420798406.png",
+        "viewCount": "0",
+        "meetingCount": "0",
+        "interestedCount": 0,
+        "vendorName": "测试基金",
+        "agents": []
+      },
+      {
+        "id": 215,
+        "title": "学堂-孙茂金",
+        "vendorId": 10,
+        "logoUrl": "http://file.dev.ethercap.com/ether-public/icon/1488433272328.png",
+        "viewCount": "1",
+        "meetingCount": "0",
+        "interestedCount": 0,
+        "vendorName": "vendor.name.id:10",
+        "agents": []
+      },
+      {
+        "id": 217,
+        "title": "项目-加肯(xxx)",
+        "vendorId": 209,
+        "logoUrl": "http://file.dev.ethercap.com/ether-public/file.dev.ethercap.com/ether-public/icon/1488433272328.png",
+        "viewCount": "4",
+        "meetingCount": "23",
+        "interestedCount": 0,
+        "vendorName": "无",
+        "agents": [
+          "线下测试"
+        ]
+      },
+      {
+        "id": 235,
+        "title": "这是个项目",
+        "vendorId": 1,
+        "logoUrl": "http://file.dev.ethercap.com/ether-public/icon/1488433272328.png",
+        "viewCount": "1",
+        "meetingCount": "0",
+        "interestedCount": 0,
+        "vendorName": "测试基金",
+        "agents": [
+          "线下测试",
+          "周子敬"
+        ]
+      },
+      {
+        "id": 245,
+        "title": "京东",
+        "vendorId": 10,
+        "logoUrl": "http://file.dev.ethercap.com/ether-public/icon/1488433272328.png",
+        "viewCount": "10",
+        "meetingCount": "17",
+        "interestedCount": 4,
+        "vendorName": "vendor.name.id:10",
+        "agents": [
+          "线下测试",
+          "侠小然333311"
+        ]
+      },
+      {
+        "id": 251,
+        "title": "给两个任务的",
+        "vendorId": 19,
+        "logoUrl": "http://file.dev.ethercap.com/ether-public/icon/1488433272328.png",
+        "viewCount": "2",
+        "meetingCount": "0",
+        "interestedCount": 0,
+        "vendorName": "vendor.name.id:19",
+        "agents": [
+          "汤可因2"
+        ]
+      },
+      {
+        "id": 253,
+        "title": "这个几个任务？",
+        "vendorId": 21,
+        "logoUrl": "http://file.dev.ethercap.com/ether-public/icon/1488433272328.png",
+        "viewCount": "1",
+        "meetingCount": "0",
+        "interestedCount": 0,
+        "vendorName": "vendor.name.id:21",
+        "agents": []
+      },
+      {
+        "id": 265,
+        "title": "光杆司令",
+        "vendorId": 209,
+        "logoUrl": "http://file.dev.ethercap.com/ether-public/icon/1488433272328.png",
+        "viewCount": "7",
+        "meetingCount": "11",
+        "interestedCount": 2,
+        "vendorName": "无",
+        "agents": []
+      },
+      {
+        "id": 271,
+        "title": "邮件提醒2",
+        "vendorId": 10,
+        "logoUrl": "http://file.dev.ethercap.com/ether-public/icon/1488433272328.png",
+        "viewCount": "3",
+        "meetingCount": "0",
+        "interestedCount": 0,
+        "vendorName": "vendor.name.id:10",
+        "agents": [
+          "线下测试",
+          "周子敬"
+        ]
+      },
+      {
+        "id": 275,
+        "title": "自动确认会议吧",
+        "vendorId": 10,
+        "logoUrl": "http://file.dev.ethercap.com/ether-public/icon/1488433272328.png",
+        "viewCount": "1",
+        "meetingCount": "8",
+        "interestedCount": 0,
+        "vendorName": "vendor.name.id:10",
+        "agents": [
+          "汤可因2"
+        ]
+      },
+      {
+        "id": 287,
+        "title": "直接给自己啊",
+        "vendorId": 0,
+        "logoUrl": "http://file.dev.ethercap.com/ether-public/file.dev.ethercap.com/ether-public/icon/1488433272328.png",
+        "viewCount": "0",
+        "meetingCount": "1",
+        "interestedCount": 0,
+        "vendorName": "无",
+        "agents": [
+          "杨国帅"
+        ]
+      },
+      {
+        "id": 1385,
+        "title": "良哲理财",
+        "vendorId": 22,
+        "logoUrl": "http://file.dev.ethercap.com/ether-public/icon/1488433272328.png",
+        "viewCount": "1",
+        "meetingCount": "0",
+        "interestedCount": 0,
+        "vendorName": "vendor.name.id:22",
+        "agents": []
+      }
+    ],
+    "links": {
+      "self": {
+        "href": "http://czh-newadmin.dev.ethercap.com/api-base-demo/origin-list?withConfig=1&page=1"
+      },
+      "next": {
+        "href": "http://czh-newadmin.dev.ethercap.com/api-base-demo/origin-list?withConfig=1&page=2"
+      },
+      "last": {
+        "href": "http://czh-newadmin.dev.ethercap.com/api-base-demo/origin-list?withConfig=1&page=104"
+      }
+    },
+    "meta": {
+      "totalCount": 2067,
+      "pageCount": 104,
+      "currentPage": 1,
+      "perPage": 20
+    },
+    "sort": {
+      "id": "/api-base-demo/origin-list?withConfig=1&sort=id",
+      "creationTime": "/api-base-demo/origin-list?withConfig=1&sort=creationTime",
+      "updateTime": "/api-base-demo/origin-list?withConfig=1&sort=updateTime",
+      "onlineTime": "/api-base-demo/origin-list?withConfig=1&sort=onlineTime",
+      "stats.cronTotalMeetingCnt": "/api-base-demo/origin-list?withConfig=1&sort=stats.cronTotalMeetingCnt",
+      "stats.cronPlatformMeetingCnt": "/api-base-demo/origin-list?withConfig=1&sort=stats.cronPlatformMeetingCnt",
+      "stats.cronOtherMeetingCnt": "/api-base-demo/origin-list?withConfig=1&sort=stats.cronOtherMeetingCnt",
+      "stats.onlineMeetingCount": "/api-base-demo/origin-list?withConfig=1&sort=stats.onlineMeetingCount",
+      "stats.offlineMeetingCount": "/api-base-demo/origin-list?withConfig=1&sort=stats.offlineMeetingCount",
+      "vendor.name": "/api-base-demo/origin-list?withConfig=1&sort=vendor.name",
+      "vendor.vendorType": "/api-base-demo/origin-list?withConfig=1&sort=vendor.vendorType"
+    },
+    "params": {
+      "userIdSearch": null,
+      "searchCity": null,
+      "disallow": null,
+      "exposeStatus": null
+    }
+  }
+}
