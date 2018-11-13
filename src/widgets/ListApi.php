@@ -23,7 +23,7 @@ class ListApi extends Widget
      */
     private $_serializer;
 
-    public $columns = [];
+    public $columns;
 
     /**
      * Initializes the Api.
@@ -34,7 +34,8 @@ class ListApi extends Widget
         if ($this->dataProvider === null) {
             throw new InvalidConfigException('The "dataProvider" property must be set.');
         }
-        $this->_serializer = new $this->serializer($this->serializerOptions + ['columns' => $this->columns]);
+        $this->_serializer = new $this->serializer($this->serializerOptions
+            + ['columns' => $this->columns] + ['useModelResponse' => $this->useModelResponse]);
     }
 
     public function run()
