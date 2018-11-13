@@ -4,7 +4,6 @@ namespace ethercap\apiBase\components;
 
 use Yii;
 use yii\base\Component;
-use yii\base\Model;
 use yii\web\Response;
 use ethercap\apiBase\components\json\Formatter;
 
@@ -31,9 +30,6 @@ class ResBuilder extends Component
 
     public function run()
     {
-        print_r(Yii::$classMap[Model::class]);
-        print_r(Model::rules());
-        exit;
         Yii::$app->response->formatters[Response::FORMAT_JSON] = Formatter::class;
         $res = $this->template;
         array_walk_recursive($res, function (&$v) {

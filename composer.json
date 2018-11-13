@@ -19,10 +19,7 @@
   "autoload": {
     "psr-4": {
       "ethercap\\apiBase\\": "src"
-    },
-    "classmap": [
-        "src/components/Model.php"
-    ]
+    }
   },
   "repositories": {
     "0": {

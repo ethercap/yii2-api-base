@@ -19,9 +19,8 @@ class Renderer extends Component
         if ($validator instanceof InlineValidator) {
             return [];
         }
-        $type = self::getType($validator);
         return [
-            'type' => $type,
+            'type' => self::getType($validator),
             'options' => $validator->getClientOptions($model, $field),
         ];
     }
