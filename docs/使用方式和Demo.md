@@ -6,7 +6,7 @@
 2. [小部件](小部件.md)
 2. [代码生成](小部件.md)
 
-## 配置
+## 配置(已通过bootstrap方法默认提供，不需要额外配置)
 
 ```
     public function bootstrap($app)
@@ -43,6 +43,6 @@ view文件的后缀设置为.api，其他规则与view相同。
 ## Demo
 
 提供了一个配置后直接可用demo（在platform工程中，如他工程需要简单修改）
-api-base-demo/list?withConfig=1
-api-base-demo/origin-list?withConfig=1
-api-base-demo/detail-view?withConfig=1
+- api-base-demo/list?withConfig=1
+- api-base-demo/origin-list?withConfig=1
+- api-base-demo/detail-view?withConfig=1
