@@ -65,8 +65,8 @@ public function data($value = null, $default = []);
 ```
 
 ##示例代码
-[Controller](src/demos/controllers/IndexController.php) 
-[Controller](src/demos) 
+- [Controller](src/demos/controllers/IndexController.php) 
+- [views](src/demos/views) 
 
 ## Demo
 
