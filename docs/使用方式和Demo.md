@@ -38,11 +38,39 @@
 ```
 
 ## 使用
-view文件的后缀设置为.api，其他规则与view相同。
+
+- view文件的后缀设置为.api，其他规则与view相同。
+- 页面中默认注入ResBuilder对象 $res 用于构建返回
+- $res 提供data和field两种方法，签名如下：
+
+```
+/**
+ * 将结果包装在key下，如果value为null会返回一个Value对象用于调起Widget
+ *
+ * @param null  $key
+ * @param null  $value
+ * @param array $default
+ * @return Value|null
+ */
+public function field($key = null, $value = null, $default = []);
+   
+/**
+ * 如果value为null会返回一个Value对象用于调起Widget
+ *
+ * @param null  $value
+ * @param array $default
+ * @return Value|null
+ */
+public function data($value = null, $default = []);
+```
+
+##示例代码
+[Controller](src/demos/controllers/IndexController.php) 
+[Controller](src/demos) 
 
 ## Demo
 
-提供了一个配置后直接可用demo（在platform工程中，如他工程需要简单修改）
+提供了一个配置后直接可用demo（在platform工程中，如他工程需要简单修改 src/demos）
 - api-base-demo/list?withConfig=1
 - api-base-demo/origin-list?withConfig=1
 - api-base-demo/detail-view?withConfig=1
