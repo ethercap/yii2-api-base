@@ -1,0 +1,12 @@
+<?php
+use ethercap\apiBase\components\ResBuilder;
+use ethercap\apiBase\widgets\DetailApi;
+
+/* @var $res ResBuilder*/
+/* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
+
+$res->field('params')->widget(DetailApi::class, [
+    'useModelResponse' => true,
+    'model' => $model,
+    'columns' => require 'detail_columns.php'
+]);
