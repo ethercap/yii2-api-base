@@ -2,65 +2,63 @@
   "code": 0,
   "message": "成功",
   "data": {
-    "params": {
-      "id": {
-        "value": 245
-      },
-      "title": {
-        "value": "京东"
-      },
-      "vendorId": {
-        "value": 10
-      },
-      "logoUrl": {
-        "value": "http://file.dev.ethercap.com/ether-public/icon/1488433272328.png"
-      },
-      "viewCount": {
-        "value": "10"
-      },
-      "meetingCount": {
-        "value": "17"
-      },
-      "interestedCount": {
-        "value": 4
-      },
-      "vendorName": {
-        "value": "vendor.name.id:10"
-      },
-      "agents": {
-        "label": "顾问信息",
-        "value": [
-          "线下测试",
-          "侠小然333311"
-        ]
-      },
-      "ip": {
-        "value": "10.10.11.11"
-      },
-      "updateTime": {
-        "value": "2017-06-07 14:52:44"
-      },
-      "bool": {
-        "value": false
-      },
-      "compare": {
-        "value": 20000
-      },
-      "email": {
-        "value": null
-      },
-      "in": {
-        "value": null
-      },
-      "match": {
-        "value": null
-      },
-      "string": {
-        "value": null
-      },
-      "url": {
-        "value": null
-      }
+    "id": {
+      "value": 245
+    },
+    "title": {
+      "value": "京东"
+    },
+    "vendorId": {
+      "value": 10
+    },
+    "logoUrl": {
+      "value": "http://file.dev.ethercap.com/ether-public/icon/1488433272328.png"
+    },
+    "viewCount": {
+      "value": "10"
+    },
+    "meetingCount": {
+      "value": "17"
+    },
+    "interestedCount": {
+      "value": 4
+    },
+    "vendorName": {
+      "value": "vendor.name.id:10"
+    },
+    "agents": {
+      "label": "顾问信息",
+      "value": [
+        "线下测试",
+        "侠小然333311"
+      ]
+    },
+    "ip": {
+      "value": "10.10.11.11"
+    },
+    "updateTime": {
+      "value": "2017-06-07 14:52:44"
+    },
+    "bool": {
+      "value": false
+    },
+    "compare": {
+      "value": 20000
+    },
+    "email": {
+      "value": null
+    },
+    "in": {
+      "value": null
+    },
+    "match": {
+      "value": null
+    },
+    "string": {
+      "value": null
+    },
+    "url": {
+      "value": null
     }
   }
 }

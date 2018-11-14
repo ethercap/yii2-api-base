@@ -5,7 +5,7 @@ use ethercap\apiBase\widgets\DetailApi;
 /* @var $res ResBuilder*/
 /* @var $model \common\models\Project */
 
-$res->field('params')->widget(DetailApi::class, [
+$res->field()->widget(DetailApi::class, [
     'useModelResponse' => true,
     'model' => $model,
     'columns' => require 'detail_columns.php'
