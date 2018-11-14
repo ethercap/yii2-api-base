@@ -25,9 +25,9 @@ class Bootstrap implements BootstrapInterface
         if ($app->hasModule('gii')) {
             $app->getModule('gii')->generators = array_merge($app->getModule('gii')->generators, [
                 'api' => [
-                    'class' => 'ethercap\apiBase\components\Generator',
+                    'class' => 'ethercap\apiBase\generators\Generator',
                     'templates' => [
-                        'default' => '@ethercap/apiBase/src/template/api',
+                        'default' => '@ethercap/apiBase/generators/template/api',
                     ],
                 ],
             ]);

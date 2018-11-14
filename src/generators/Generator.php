@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace ethercap\apiBase\components;
+namespace ethercap\apiBase\generators;
 
 use Yii;
 use yii\db\ActiveRecord;
@@ -178,7 +178,7 @@ class Generator extends \yii\gii\Generator
             if (empty($this->searchModelClass) && $file === '_search.php') {
                 continue;
             }
-            if (is_file($templatePath . '/' . $file) && pathinfo($file, PATHINFO_EXTENSION) === 'php') {
+            if (is_file($templatePath . '/' . $file) && (pathinfo($file, PATHINFO_EXTENSION) === 'php' || pathinfo($file, PATHINFO_EXTENSION) === 'api')) {
                 $files[] = new CodeFile("$viewPath/$file", $this->render("views/$file"));
             }
         }
