@@ -4,7 +4,6 @@ use ethercap\apiBase\widgets\DetailApi;
 
 /* @var $res ResBuilder*/
 /* @var $model \common\models\Project */
-
 $res->field()->widget(DetailApi::class, [
     'useModelResponse' => true,
     'model' => $model,
