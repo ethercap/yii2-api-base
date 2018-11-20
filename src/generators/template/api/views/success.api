@@ -1,0 +1,13 @@
+<?php
+
+/* @var $generator yii\gii\generators\crud\Generator */
+
+echo "<?php\n";
+
+?>
+
+$res->field('params')->widget(DetailApi::class, [
+'useModelResponse' => true,
+'model' => $model,
+'columns' => [$model::PrimaryKey()]
+]);
