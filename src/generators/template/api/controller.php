@@ -34,7 +34,7 @@ use <?= ltrim($generator->modelClass, '\\') ?>;
 <?php if (!empty($generator->searchModelClass)): ?>
     use <?= ltrim($generator->searchModelClass, '\\') . (isset($searchModelAlias) ? " as $searchModelAlias" : "") ?>;
 <?php else: ?>
-    use yii\data\ActiveDataProvider;
+use yii\data\ActiveDataProvider;
 <?php endif; ?>
 use yii\web\NotFoundHttpException;
 use ethercap\apiBase\Controller;
@@ -55,7 +55,7 @@ class <?= $controllerClass ?> extends Controller
         $searchModel = new <?= isset($searchModelAlias) ? $searchModelAlias : $searchModelClass ?>();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index_model_res.api', [
+        return $this->renderApi('index_model_res.api', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -67,7 +67,7 @@ class <?= $controllerClass ?> extends Controller
             'dataProvider' => $dataProvider,
         ]);
     <?php endif; ?>
-    }
+}
 
     public function actionOriginList()
     {
@@ -75,7 +75,7 @@ class <?= $controllerClass ?> extends Controller
         <?php if (!empty($generator->searchModelClass)): ?>
         $searchModel = new <?= isset($searchModelAlias) ? $searchModelAlias : $searchModelClass ?>();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('index_origin_res.api', [
+        return $this->renderApi('index_origin_res.api', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -87,7 +87,7 @@ class <?= $controllerClass ?> extends Controller
             'dataProvider' => $dataProvider,
         ]);
         <?php endif; ?>
-    }
+}
 
     public function actionDetailView(<?= $actionParams ?>)
     {
