@@ -1,4 +1,8 @@
 <?php
+
+echo "<?php\n";
+
+?>
 use ethercap\apiBase\components\ResBuilder;
 use ethercap\apiBase\widgets\DetailApi;
 

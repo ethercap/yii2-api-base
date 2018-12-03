@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace ethercap\apiBase\components;
+namespace ethercap\apiBase\generators;
 
 use Yii;
 use yii\db\ActiveRecord;
@@ -68,7 +68,7 @@ class Generator extends \yii\gii\Generator
     {
         return array_merge(parent::rules(), [
             [['controllerClass', 'modelClass', 'searchModelClass', 'baseControllerClass'], 'filter', 'filter' => 'trim'],
-            [['modelClass', 'controllerClass', 'baseControllerClass', 'indexWidgetType'], 'required'],
+            [['modelClass', 'controllerClass', 'searchModelClass', 'baseControllerClass', 'indexWidgetType'], 'required'],
             [['searchModelClass'], 'compare', 'compareAttribute' => 'modelClass', 'operator' => '!==', 'message' => 'Search Model Class must not be equal to Model Class.'],
             [['modelClass', 'controllerClass', 'baseControllerClass', 'searchModelClass'], 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
             [['modelClass'], 'validateClass', 'params' => ['extends' => BaseActiveRecord::className()]],
@@ -178,7 +178,7 @@ class Generator extends \yii\gii\Generator
             if (empty($this->searchModelClass) && $file === '_search.php') {
                 continue;
             }
-            if (is_file($templatePath . '/' . $file) && pathinfo($file, PATHINFO_EXTENSION) === 'php') {
+            if (is_file($templatePath . '/' . $file) && (pathinfo($file, PATHINFO_EXTENSION) === 'php' || pathinfo($file, PATHINFO_EXTENSION) === 'api')) {
                 $files[] = new CodeFile("$viewPath/$file", $this->render("views/$file"));
             }
         }
