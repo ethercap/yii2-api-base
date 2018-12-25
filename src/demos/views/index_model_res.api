@@ -14,9 +14,9 @@ $res->data()->widget(ListApi::class, [
     'dataProvider' => $dataProvider,
     'columns' => require 'columns.php'
 ]);
-
 $res->field('params')->widget(DetailApi::class, [
     'useModelResponse' => true,
+    'resTpl' => Yii::$app->request->get('tpl'),
     'model' => $searchModel,
     'columns' => require 'search_columns.php'
 ]);

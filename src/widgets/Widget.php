@@ -16,11 +16,16 @@ class Widget extends BaseWidget
 
     public $useModelResponse;
 
+    public $resTpl;
+
     public function init()
     {
         parent::init();
         if ($this->builder === null) {
             throw new InvalidConfigException('The "builder" property must be set.');
+        }
+        if ($this->resTpl) {
+            $this->builder->use($this->resTpl);
         }
     }
 

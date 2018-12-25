@@ -65,11 +65,13 @@ class Serializer extends BaseSerializer
 
     protected function serializeModelErrors($model)
     {
+        $this->errInstance = $model;
         $result = [];
         foreach ($model->getFirstErrors() as $name => $message) {
             $result[$name] = SysMsg::get($message);
         }
-        return $result;
+        $ret = ['errors' => $result];
+        return $ret;
     }
 
     protected function serializeDataProvider($dataProvider)
