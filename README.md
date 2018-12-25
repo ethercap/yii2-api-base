@@ -31,7 +31,7 @@ ethercap\apiBase
 - 接口规范
     - model和dataProvider的特定返回形式。
     - 提供block和非block的的错误处理形式，兼容sysMsg。
-    - 可自主选择返回validator信息用于前端自动化校验。
+    - 可选择返是否回validator信息用于前端自动化校验。
 - 代码生成
     - 完整的gii generator。
 
