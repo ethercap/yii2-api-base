@@ -10,6 +10,7 @@ class Serializer extends BaseSerializer
     {
         $this->collectionEnvelope = 'items';
         $this->metaEnvelope = 'meta';
+        $this->sortEnvelope = 'sort';
         parent::init();
     }
 

@@ -45,6 +45,7 @@ ethercap\apiBase
 - 支持当前规范的同时也兼容既有的接口（K=>V）的返回方式，按需使用
 
 ### 1月2日更新
-- 去掉sort和links的默认配置
+- 修改sort的返回为当前生效的sorter
+- 去掉links的默认配置
 - 增加直接调用serializer获取model可用信息的的示例代码
 

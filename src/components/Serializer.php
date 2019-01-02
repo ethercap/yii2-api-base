@@ -93,12 +93,7 @@ class Serializer extends BaseSerializer
 
     protected function serializeSorter(Sort $sorter)
     {
-        $attributes = array_keys($sorter->attributes);
-        $ret = null;
-        foreach ($attributes as $attribute) {
-            $ret[$attribute] = $sorter->createUrl($attribute);
-        }
-        return [$this->sortEnvelope => $ret];
+        return [$this->sortEnvelope => $sorter->getAttributeOrders()];
     }
 
     protected function normalizeAttributes($model)
