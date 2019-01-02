@@ -13,9 +13,9 @@ class ListApi extends Widget
 
     public $serializerOptions = [
         'collectionEnvelope' => 'items',
-        'linksEnvelope' => 'links',
+        //'linksEnvelope' => 'links',
         'metaEnvelope' => 'meta',
-        'sortEnvelope' => 'sort',
+        //'sortEnvelope' => 'sort',
     ];
 
     /**

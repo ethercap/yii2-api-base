@@ -2,6 +2,7 @@
 
 namespace ethercap\apiBase\demos\controllers;
 
+use ethercap\apiBase\Serializer;
 use lspbupt\common\helpers\SysMsg;
 use Yii;
 use backend\models\ProjectSearch;
@@ -38,6 +39,25 @@ class IndexController extends Controller
         $model = Project::findOne(245);
         return $this->renderApi('@ethercap/apiBase/demos/views/detail.api', [
             'model' => $model,
+        ]);
+    }
+
+    public function actionSerializer()
+    {
+        $this->layout = false;
+        $searchModel = new ProjectSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('@ethercap/apiBase/demos/views/serializer', [
+            'form' => (new Serializer())->useModelResponse()->setAddConfig()->setColumn([
+                'scaleLower',
+                'scaleUpper',
+                'vendorId',
+            ])->serialize($searchModel),
+            'dataProvider' => (new Serializer())->useModelResponse()->setColumn([
+                'scaleLower',
+                'scaleUpper',
+                'vendorId',
+            ])->serialize($dataProvider),
         ]);
     }
 

@@ -12,20 +12,25 @@ use yii\base\Model;
 use yii\base\Arrayable;
 use yii\helpers\Inflector;
 use yii\i18n\Formatter;
+use yii\web\Link;
 
 class Serializer extends BaseSerializer
 {
     public $useModelResponse;
+
+    public $linksEnvelope = false;
 
     /**
      * 配置这个属性后会返回全部可用排序信息，依赖collectionEnvelope，如果collectionEnvelope不配置则不会返回附加信息。
      */
     public $sortEnvelope;
     /**
-     * 配置这个属性后会返回全部可用排序信息，（不依赖collectionEnvelope，schema 并不是列表属性，
+     * 配置这个属性后会返回model的配置信息，（不依赖collectionEnvelope，schema 并不是列表属性，
      * 而是detail的属性，准确的说只有一个model或者form才有schema）。
      */
     public $configParam = 'withConfig';
+
+    public $addConfig;
 
     public $columns;
 
@@ -151,11 +156,11 @@ class Serializer extends BaseSerializer
 
             if (isset($attribute['attribute'])) {
                 $attributeName = $attribute['attribute'];
-                if (!isset($attribute['label']) && Yii::$app->request->get($this->configParam) && $this->canAddConfig) {
+                if (!isset($attribute['label']) && $this->addConfig()) {
                     $attribute['label'] = $model instanceof Model ? $model->getAttributeLabel($attributeName) : Inflector::camel2words($attributeName, true);
                 }
 
-                if (!isset($attribute['rules']) && Yii::$app->request->get($this->configParam) && $this->canAddConfig) {
+                if (!isset($attribute['rules']) && $this->addConfig()) {
                     $attribute['rules'] = Schema::buildField($model, $attribute['attribute']);
                 }
 
@@ -228,6 +233,30 @@ class Serializer extends BaseSerializer
                 $ret[$i] = $attribute['value'];
             }
         }
+        return $ret;
+    }
+
+    protected function addConfig()
+    {
+        return (Yii::$app->request->get($this->configParam) && $this->canAddConfig) || ($this->addConfig && $this->canAddConfig);
+    }
+
+    protected function serializePagination($pagination)
+    {
+        $ret = [];
+        if ($this->linksEnvelope) {
+            $ret[$this->linksEnvelope] = Link::serialize($pagination->getLinks(true));
+        }
+
+        if ($this->metaEnvelope) {
+            $ret[$this->metaEnvelope] = [
+                'totalCount' => $pagination->totalCount,
+                'pageCount' => $pagination->getPageCount(),
+                'currentPage' => $pagination->getPage() + 1,
+                'perPage' => $pagination->getPageSize(),
+            ];
+        }
+
         return $ret;
     }
 }
