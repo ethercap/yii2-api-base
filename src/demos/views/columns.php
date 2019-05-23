@@ -1,6 +1,6 @@
 <?php
 
-use yii\helpers\ArrayHelper;
+use ethercap\apiBase\demos\models\Project;
 
 return [
     'id',
@@ -15,18 +15,18 @@ return [
         'value' => function ($model) {
             $vendor = $model->vendor;
             return $vendor ? $vendor->name : '无';
-        }, ],
-    'agents' => [
-        'label' => '顾问信息',
-        'value' => function ($model) {
-            $agentNames = [];
-            foreach ($model->agents as $agent) {
-                if (!$agent->agent) {
-                    continue;
-                }
-                $agentNames[] = ArrayHelper::getValue($agent, 'realAgentInfo.name', '未知用户');
-            }
-            return $agentNames;
         },
+    ],
+    'widgetColumn' => [
+        'class' => \ethercap\apiBase\columns\WidgetColumn::class,
+        'widgetConfig' => [
+            'class' => \ethercap\apiBase\widgets\ModelsApi::class,
+            'builder' => $res,
+            'models' => Project::findAll(['id' => ['143', '257']]),
+            'columns' => [
+                'id', 'title',
+            ],
+        ],
+        'label' => '顾问信息',
     ],
 ];

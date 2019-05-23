@@ -40,7 +40,6 @@ class Json extends BaseJson
                 }
             }
         }
-
         return $data;
     }
 }

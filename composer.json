@@ -14,29 +14,13 @@
     }
   ],
   "require": {
-    "yiisoft/yii2": "*"
+    "yiisoft/yii2": "*",
+    "ethercap/common":"@dev"
   },
   "autoload": {
     "psr-4": {
       "ethercap\\apiBase\\": "src"
     }
-  },
-  "repositories": {
-    "0": {
-      "type": "composer",
-      "url": "https://satis.ethercap.com"
-    },
-    "1": {
-      "type": "composer",
-      "url": "https://asset.dev.ethercap.com"
-    },
-    "packagist": {
-      "type": "composer",
-      "url": "https://packagist.laravel-china.org"
-    }
-  },
-  "require-dev": {
-    "phpdocumentor/phpdocumentor": "dev-master"
   },
   "extra": {
     "bootstrap": "ethercap\\apiBase\\Bootstrap"
