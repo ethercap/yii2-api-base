@@ -5,7 +5,7 @@ use ethercap\apiBase\widgets\DetailApi;
 /* @var $res ResBuilder*/
 /* @var $model \common\models\Project */
 $res->field()->widget(DetailApi::class, [
-    'useModelResponse' => true,
+    'useModelResponse' => false,
     'resTpl' => Yii::$app->request->get('tpl'),
     'model' => $model,
     'columns' => require 'detail_columns.php'

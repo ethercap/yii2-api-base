@@ -5,7 +5,6 @@ namespace ethercap\apiBase\components;
 use Yii;
 use yii\data\Sort;
 use yii\helpers\ArrayHelper;
-use lspbupt\common\helpers\SysMsg;
 use yii\rest\Serializer as BaseSerializer;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
@@ -13,6 +12,7 @@ use yii\base\Arrayable;
 use yii\helpers\Inflector;
 use yii\i18n\Formatter;
 use yii\web\Link;
+use ethercap\common\helpers\SysMsg;
 
 class Serializer extends BaseSerializer
 {
@@ -53,7 +53,7 @@ class Serializer extends BaseSerializer
         }
     }
 
-    protected function serializeModels(array $models)
+    public function serializeModels(array $models)
     {
         foreach ($models as $i => $model) {
             if ($row = $this->serializeModel($model)) {
@@ -137,6 +137,21 @@ class Serializer extends BaseSerializer
                 throw new InvalidConfigException('The attribute configuration must be an array.');
             }
 
+            if (isset($attribute['class'])) {
+                $class = ArrayHelper::remove($attribute, 'class');
+                $column = new $class();
+                $column->model = $model;
+                if (is_subclass_of($column, Column::class)) {
+                    foreach ($attribute as $key => $value) {
+                        if ($column->canSetProperty($key)) {
+                            $column->{$key} = $value;
+                            unset($attribute[$key]);
+                        }
+                    }
+                    $attribute['value'] = $column->evaluate();
+                }
+            }
+
             if (!isset($attribute['format'])) {
                 $attribute['format'] = 'raw';
             }
@@ -199,6 +214,21 @@ class Serializer extends BaseSerializer
 
             if (!is_array($attribute)) {
                 throw new InvalidConfigException('The attribute configuration must be an array.');
+            }
+
+            if (isset($attribute['class'])) {
+                $class = ArrayHelper::remove($attribute, 'class');
+                $column = new $class();
+                $column->model = $model;
+                if (is_subclass_of($column, Column::class)) {
+                    foreach ($attribute as $key => $value) {
+                        if ($column->canSetProperty($key)) {
+                            $column->{$key} = $value;
+                            unset($attribute[$key]);
+                        }
+                    }
+                    $attribute['value'] = $column->evaluate();
+                }
             }
 
             if (!isset($attribute['format'])) {

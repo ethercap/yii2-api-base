@@ -2,12 +2,12 @@
 
 namespace ethercap\apiBase\demos\controllers;
 
-use ethercap\apiBase\Serializer;
-use lspbupt\common\helpers\SysMsg;
 use Yii;
-use backend\models\ProjectSearch;
+use ethercap\apiBase\Serializer;
+use ethecap\common\helpers\SysMsg;
 use ethercap\apiBase\demos\models\Project;
 use ethercap\apiBase\Controller;
+use backend\models\ProjectSearch;
 
 class IndexController extends Controller
 {
@@ -36,7 +36,7 @@ class IndexController extends Controller
     public function actionDetailView()
     {
         Yii::$app->response->format = 'json';
-        $model = Project::findOne(245);
+        $model = Project::findOne(560);
         return $this->renderApi('@ethercap/apiBase/demos/views/detail.api', [
             'model' => $model,
         ]);

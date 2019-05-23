@@ -3,7 +3,7 @@
 namespace ethercap\apiBase\components\responseTemplates;
 
 use yii\base\BaseObject;
-use lspbupt\common\helpers\SysMsg;
+use ethercap\common\helpers\SysMsg;
 
 /**
  * 当发生错误时会按照SysMsg的方式返回错误。
