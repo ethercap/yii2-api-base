@@ -49,3 +49,6 @@ ethercap\apiBase
 - 去掉links的默认配置
 - 增加直接调用serializer获取model可用信息的的示例代码
 
+### 5月23日更新
+- 增加ModelsWidget
+- 增加Column配置项（widgetColumn,用于复杂数据结构）
