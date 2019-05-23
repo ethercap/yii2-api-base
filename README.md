@@ -24,7 +24,7 @@ ethercap\apiBase
 ### 四、安装：
 
 ```
-- composer require ethercap/apiBase:@dev
+- composer require ethercap/yii2-api-base:@dev
 ```
 
 ### 功能
