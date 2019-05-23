@@ -1,5 +1,5 @@
 {
-  "name": "ethercap/apiBase",
+  "name": "ethercap/yii2-api-base",
   "description": "内部接口规范和推荐实现",
   "type": "yii2-extension",
   "minimum-stability": "stable",
