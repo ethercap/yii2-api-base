@@ -72,7 +72,7 @@ public function data($value = null, $default = []);
 
 ## Demo
 
-提供了一个配置后直接可用demo（在platform工程中，如他工程需要简单修改 src/demos）
+提供了一个demo
 - api-base-demo/list?withConfig=1
 - api-base-demo/origin-list?withConfig=1
 - api-base-demo/detail-view?withConfig=1

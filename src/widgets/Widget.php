@@ -9,6 +9,8 @@ use yii\base\InvalidConfigException;
 
 class Widget extends BaseWidget
 {
+    public $context;
+
     /**
      * @var \ethercap\apiBase\components\ResBuilder;
      */

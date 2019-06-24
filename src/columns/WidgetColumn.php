@@ -12,6 +12,7 @@ class WidgetColumn extends Column
     public function evaluate()
     {
         $widget = Yii::createObject($this->widgetConfig);
+        $widget->context = $this->model;
         return $widget->run();
     }
 }
