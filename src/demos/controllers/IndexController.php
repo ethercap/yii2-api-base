@@ -4,7 +4,7 @@ namespace ethercap\apiBase\demos\controllers;
 
 use Yii;
 use ethercap\apiBase\Serializer;
-use ethercap\common\helpers\SysMsg;
+use ethecap\common\helpers\SysMsg;
 use ethercap\apiBase\demos\models\Project;
 use ethercap\apiBase\Controller;
 use backend\models\ProjectSearch;

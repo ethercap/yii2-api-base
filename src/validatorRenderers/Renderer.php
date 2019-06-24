@@ -59,15 +59,21 @@ class Renderer extends Component
      */
     public static function getType($validator)
     {
+        foreach (Validator::$builtInValidators as $type => $class) {
+            //这个方法严格限制必须是子类才会返回true，所以需要加上下边的array_search
+            if (is_subclass_of($validator, $class)) {
+                return $type;
+            }
+        }
         if ($type = array_search(get_class($validator), Validator::$builtInValidators)) {
             return $type;
         }
         if ($validator) {
             $type = strtolower(
-                str_replace('Validator', '',
-                    substr(get_class($validator),
-                        strrpos(get_class($validator), '\\') + 1
-                    )
+                str_replace(
+                    'Validator',
+                    '',
+                    substr(get_class($validator), strrpos(get_class($validator), '\\') + 1)
                 )
             );
         }

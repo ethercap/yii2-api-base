@@ -7,6 +7,9 @@ use ethercap\apiBase\components\Serializer;
 
 class ModelsApi extends ListApi
 {
+    /**
+     * @ Model[] | callable with function($model)
+     */
     public $models;
 
     public $serializerOptions = [
@@ -31,6 +34,10 @@ class ModelsApi extends ListApi
 
     public function run()
     {
+        if (is_callable($this->models)) {
+            $this->models = call_user_func($this->models, $this->context);
+        }
+
         $rtData = $this->_serializer->serializeModels($this->models);
         if ($errModel = $this->_serializer->errInstance) {
             $this->builder->pushError($errModel);
