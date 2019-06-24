@@ -13,7 +13,12 @@
 ### 二、简介。
 
 1. 功能
-    1. 参照MVC思想封装了一种定义接口返回字段的方式，同时籍由此推广一下YII中列表和模型的返回格式[【参考Wiki】](https://c.ethercap.com/pages/viewpage.action?pageId=24019061)
+    1. 为接口返回做了mvc分层；
+    2. 针对列表、详情等展示做了接口规范（配合前端框架etherMVC使用，可以极大减少前后端对接成本）；
+    3. 表单校验规则，按需返回服务端定义的字段规则（rule）用于接口提交数据校验；
+    4. 代码生成，可以极大降低服务端开发成本；
+    5. 提供几种小部件，配合我们提出的接口规范；
+    
 
 ### 三、命名空间
 
@@ -21,34 +26,14 @@
 ethercap\apiBase
 ```
 
-### 四、安装：
+### 四、安装:
 
 ```
-- composer require ethercap/yii2-api-base:@dev
+composer require ethercap/yii2-api-base:@dev
 ```
 
-### 功能
+### toDo
 
-- 接口规范
-    - model和dataProvider的特定返回形式。
-    - 提供block和非block的的错误处理形式，兼容sysMsg。
-    - 可选择返是否回validator信息用于前端自动化校验。
-- 代码生成
-    - 完整的gii generator。
-
-### 特点
-
-- 为配置方便将配置集成在bootstrap中(_功能稳定后可以提供一个没有自动配置的版本_)。
-- 接近YII2内部的render页面的调用方式。
-- 和DetailView完成一致的Column写法
-- 提供ListApi和DetailApi两个小部件用于构建接口的返回
-- 支持当前规范的同时也兼容既有的接口（K=>V）的返回方式，按需使用
-
-### 1月2日更新
-- 修改sort的返回为当前生效的sorter
-- 去掉links的默认配置
-- 增加直接调用serializer获取model可用信息的的示例代码
-
-### 5月23日更新
-- 增加ModelsWidget
-- 增加Column配置项（widgetColumn,用于复杂数据结构）
+- 修改demo为直接可用
+- 返回字段类型检查（如空数组和空对象）
+- 返回字段的默认值设置
