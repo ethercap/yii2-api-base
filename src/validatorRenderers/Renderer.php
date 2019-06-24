@@ -61,7 +61,10 @@ class Renderer extends Component
     {
         foreach (Validator::$builtInValidators as $type => $class) {
             //这个方法严格限制必须是子类才会返回true，所以需要加上下边的array_search
-            if (is_subclass_of($validator, $class)) {
+            if (is_array($class)) {
+                $class = $class['class'] ?? '';
+            }
+            if ($class && is_subclass_of($validator, $class)) {
                 return $type;
             }
         }
