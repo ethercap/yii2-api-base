@@ -10,7 +10,7 @@ use ethercap\apiBase\widgets\DetailApi;
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 
 $res->field('params')->widget(DetailApi::class, [
-    'useModelResponse' => true,
+    'useModelResponse' => <?= $generator->useModelResponse ? 'true' : 'false'; ?>,
     'model' => $model,
     'columns' => require 'detail_columns.php'
 ]);

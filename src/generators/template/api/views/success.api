@@ -7,7 +7,7 @@ echo "<?php\n";
 ?>
 
 $res->field('params')->widget(DetailApi::class, [
-'useModelResponse' => true,
+'useModelResponse' => <?= $generator->useModelResponse ? 'true' : 'false'; ?>,
 'model' => $model,
 'columns' => [$model::PrimaryKey()]
 ]);
