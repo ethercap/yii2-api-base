@@ -14,7 +14,7 @@ use ethercap\apiBase\widgets\ListApi;
 /* @var $searchModel ProjectSearch*/
 
 $res->data()->widget(ListApi::class, [
-    'useModelResponse' => true,
+    'useModelResponse' => <?= $generator->useModelResponse ? 'true' : 'false'; ?>,
     'dataProvider' => $dataProvider,
     'columns' => require 'columns.php'
 ]);
