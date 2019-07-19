@@ -2,6 +2,7 @@
 
 namespace ethercap\apiBase\components;
 
+use ethercap\apiBase\components\typeCast\JsonTypeCast;
 use Yii;
 use yii\data\Sort;
 use yii\helpers\ArrayHelper;
@@ -28,7 +29,7 @@ class Serializer extends BaseSerializer
      * 配置这个属性后会返回model的配置信息，（不依赖collectionEnvelope，schema 并不是列表属性，
      * 而是detail的属性，准确的说只有一个model或者form才有schema）。
      */
-    public $configParam = 'withConfig';
+    public $addConfigParam = 'withConfig';
 
     public $addConfig;
 
@@ -37,6 +38,8 @@ class Serializer extends BaseSerializer
     public $errInstance;
 
     public $formatter;
+
+    public $typeCastClass = JsonTypeCast::class;
 
     protected $canAddConfig = true;
 
@@ -110,17 +113,16 @@ class Serializer extends BaseSerializer
             }
             sort($this->columns);
         }
-        if ($this->useModelResponse) {
-            return $this->normalizeModelResponse($model);
-        } else {
-            return $this->normalizeResponse($model);
-        }
+        return $this->normalizeResponse($model);
     }
 
-    protected function normalizeModelResponse($model)
+    protected function normalizeResponse($model)
     {
         $ret = [];
         foreach ($this->columns as $i => $attribute) {
+            if ($attribute instanceof \Closure) {
+                $attribute = ['value' => $attribute];
+            }
             if (is_string($attribute)) {
                 if (!preg_match('/^([^:]+)(:(\w*))?(:(.*))?(:(\w*))?$/', $attribute, $matches)) {
                     throw new InvalidConfigException('The attribute must be specified in the format of "attribute", "attribute:format" or "attribute:format:label"');
@@ -156,87 +158,27 @@ class Serializer extends BaseSerializer
                 $attribute['format'] = 'raw';
             }
 
-            if (!isset($attribute['rules']) || !$this->canAddConfig) {
-                unset($attribute['rules']);
-            }
+            if ($this->useModelResponse) {
+                if (!isset($attribute['rules']) || !$this->canAddConfig) {
+                    unset($attribute['rules']);
+                }
 
-            if (!isset($attribute['label']) || !$this->canAddConfig) {
-                unset($attribute['label']);
+                if (!isset($attribute['label']) || !$this->canAddConfig) {
+                    unset($attribute['label']);
+                }
             }
 
             if (isset($attribute['attribute'])) {
                 $attributeName = $attribute['attribute'];
-                if (!isset($attribute['label']) && $this->addConfig()) {
-                    $attribute['label'] = $model instanceof Model ? $model->getAttributeLabel($attributeName) : Inflector::camel2words($attributeName, true);
-                }
-
-                if (!isset($attribute['rules']) && $this->addConfig()) {
-                    $attribute['rules'] = Schema::buildField($model, $attribute['attribute']);
-                }
-
-                if (!array_key_exists('value', $attribute)) {
-                    $attribute['value'] = ArrayHelper::getValue($model, $attributeName);
-                }
-            } elseif (!array_key_exists('value', $attribute)) {
-                throw new InvalidConfigException('The attribute configuration requires the "attribute" element to determine the value.');
-            }
-
-            if ($attribute['value'] instanceof \Closure) {
-                $attribute['value'] = call_user_func($attribute['value'], $model, $this);
-            }
-
-            $key = ArrayHelper::remove($attribute, 'attribute');
-            $format = ArrayHelper::remove($attribute, 'format');
-            $this->formatter->nullDisplay = null;
-            $attribute['value'] = $this->formatter->format($attribute['value'], $format);
-            if (is_numeric($i)) {
-                $ret[$key] = $attribute;
-            } else {
-                $ret[$i] = $attribute;
-            }
-        }
-        return $ret;
-    }
-
-    protected function normalizeResponse($model)
-    {
-        $ret = [];
-        foreach ($this->columns as $i => $attribute) {
-            if (is_string($attribute)) {
-                if (!preg_match('/^([^:]+)(:(\w*))?(:(.*))?(:(\w*))?$/', $attribute, $matches)) {
-                    throw new InvalidConfigException('The attribute must be specified in the format of "attribute", "attribute:format" or "attribute:format:label"');
-                }
-                $attribute = [
-                    'attribute' => $matches[1],
-                    'format' => isset($matches[3]) ? $matches[3] : 'raw',
-                ];
-            }
-
-            if (!is_array($attribute)) {
-                throw new InvalidConfigException('The attribute configuration must be an array.');
-            }
-
-            if (isset($attribute['class'])) {
-                $class = ArrayHelper::remove($attribute, 'class');
-                $column = new $class();
-                $column->model = $model;
-                if (is_subclass_of($column, Column::class)) {
-                    foreach ($attribute as $key => $value) {
-                        if ($column->canSetProperty($key)) {
-                            $column->{$key} = $value;
-                            unset($attribute[$key]);
-                        }
+                if ($this->useModelResponse) {
+                    if (!isset($attribute['label']) && $this->addConfig()) {
+                        $attribute['label'] = $model instanceof Model ? $model->getAttributeLabel($attributeName) : Inflector::camel2words($attributeName, true);
                     }
-                    $attribute['value'] = $column->evaluate();
+
+                    if (!isset($attribute['rules']) && $this->addConfig()) {
+                        $attribute['rules'] = Schema::buildField($model, $attribute['attribute']);
+                    }
                 }
-            }
-
-            if (!isset($attribute['format'])) {
-                $attribute['format'] = 'raw';
-            }
-
-            if (isset($attribute['attribute'])) {
-                $attributeName = $attribute['attribute'];
                 if (!array_key_exists('value', $attribute)) {
                     $attribute['value'] = ArrayHelper::getValue($model, $attributeName);
                 }
@@ -249,13 +191,20 @@ class Serializer extends BaseSerializer
             }
 
             $key = ArrayHelper::remove($attribute, 'attribute');
+
             $format = ArrayHelper::remove($attribute, 'format');
             $this->formatter->nullDisplay = null;
             $attribute['value'] = $this->formatter->format($attribute['value'], $format);
+
+            $type = ArrayHelper::remove($attribute, 'type');
+            if (is_string($type)) {
+                $this->typeCastClass::cast($type, $attribute['value']);
+            }
+
             if (is_numeric($i)) {
-                $ret[$key] = $attribute['value'];
+                $ret[$key] = $this->useModelResponse ? $attribute : $attribute['value'];
             } else {
-                $ret[$i] = $attribute['value'];
+                $ret[$i] = $this->useModelResponse ? $attribute : $attribute['value'];
             }
         }
         return $ret;
@@ -263,7 +212,7 @@ class Serializer extends BaseSerializer
 
     protected function addConfig()
     {
-        return (Yii::$app->request->get($this->configParam) && $this->canAddConfig) || ($this->addConfig && $this->canAddConfig);
+        return ($this->addConfigParam && Yii::$app->request->get($this->addConfigParam) && $this->canAddConfig) || ($this->addConfig && $this->canAddConfig);
     }
 
     protected function serializePagination($pagination)
@@ -275,10 +224,10 @@ class Serializer extends BaseSerializer
 
         if ($this->metaEnvelope) {
             $ret[$this->metaEnvelope] = [
-                'totalCount' => $pagination->totalCount,
-                'pageCount' => $pagination->getPageCount(),
                 'currentPage' => $pagination->getPage() + 1,
+                'pageCount' => $pagination->getPageCount(),
                 'perPage' => $pagination->getPageSize(),
+                'totalCount' => $pagination->totalCount,
             ];
         }
 

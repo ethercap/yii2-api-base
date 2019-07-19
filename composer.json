@@ -1,6 +1,7 @@
 {
   "name": "ethercap/yii2-api-base",
-  "description": "内部接口规范和推荐实现",
+  "description": "为Json接口返回做了类MCV分层, 并提供代码生成",
+  "keywords": ["yii2", "extension", "api", "json"],
   "type": "yii2-extension",
   "minimum-stability": "stable",
   "authors": [
@@ -11,6 +12,10 @@
     {
       "name": "zhangdong",
       "email": "zhangdong@ethercap.com"
+    },
+    {
+      "name": "linannan",
+      "email": "linannan@ethercap.com"
     }
   ],
   "require": {

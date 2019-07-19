@@ -6,9 +6,14 @@ use Yii;
 use yii\base\Widget as BaseWidget;
 use yii\base\InvalidCallException;
 use yii\base\InvalidConfigException;
+use ethercap\apiBase\components\Serializer;
+use ethercap\apiBase\components\typeCast\JsonTypeCast;
 
 class Widget extends BaseWidget
 {
+    /**
+     * @var mixed 用于连接父子组件的上下文，参见 ModelsApi
+     */
     public $context;
 
     /**
@@ -16,9 +21,44 @@ class Widget extends BaseWidget
      */
     public $builder;
 
+    public $resTpl;
+
+    public $serializer = Serializer::class;
+
+    /**
+     * @var bool serializer属性
+     */
     public $useModelResponse;
 
-    public $resTpl;
+    /**
+     * @var bool serializer属性，使用对象形式返回接口信息时，是否将配置信息一并返回
+     */
+    public $addConfig;
+
+    /**
+     * @var string 指定参数名，决定是否返回配置信息，为空则仅由addConfig决定是否返回接口配置信息
+     */
+    public $addConfigParam = 'withConfig';
+
+    /**
+     * @var bool serializer属性
+     */
+    public $serializerOptions = [];
+
+    /**
+     * @var bool serializer属性
+     */
+    public $columns;
+
+    /**
+     * @var bool serializer属性
+     */
+    public $typeCastClass = JsonTypeCast::class;
+
+    /**
+     * @var Serializer
+     */
+    protected $_serializer;
 
     public function init()
     {
@@ -73,5 +113,18 @@ class Widget extends BaseWidget
     public function renderApi($view, $params = [], $context = null)
     {
         return $this->getView()->render($view, $params, $this);
+    }
+
+    public function initSerializer()
+    {
+        $this->_serializer = new $this->serializer(
+            $this->serializerOptions +
+            [
+                'columns' => $this->columns,
+                'useModelResponse' => $this->useModelResponse,
+                'addConfig' => $this->addConfig,
+                'addConfigParam' => $this->addConfigParam,
+            ]
+        );
     }
 }
