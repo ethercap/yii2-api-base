@@ -2,11 +2,9 @@
 
 namespace ethercap\apiBase;
 
-use Yii;
 use yii\web\View;
 use yii\helpers\ArrayHelper;
 use yii\base\BootstrapInterface;
-use ethercap\apiBase\demos\controllers\IndexController;
 
 class Bootstrap implements BootstrapInterface
 {
@@ -31,9 +29,6 @@ class Bootstrap implements BootstrapInterface
                     ],
                 ],
             ]);
-        }
-        if (YII_ENV == 'dev') {
-            $app->controllerMap['api-base-demo'] = IndexController::class;
         }
     }
 }

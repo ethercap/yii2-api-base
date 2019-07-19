@@ -3,23 +3,10 @@
 namespace ethercap\apiBase\widgets;
 
 use yii\base\InvalidConfigException;
-use ethercap\apiBase\components\Serializer;
 
 class DetailApi extends Widget
 {
     public $model;
-
-    public $serializer = Serializer::class;
-
-    public $serializerOptions = [
-    ];
-
-    /**
-     * @var Serializer
-     */
-    private $_serializer;
-
-    public $columns;
 
     /**
      * Initializes the Api.
@@ -30,8 +17,7 @@ class DetailApi extends Widget
         if ($this->model === null) {
             throw new InvalidConfigException('The "model" property must be set.');
         }
-        $this->_serializer = new $this->serializer($this->serializerOptions
-            + ['columns' => $this->columns] + ['useModelResponse' => $this->useModelResponse]);
+        $this->initSerializer();
     }
 
     public function run()
