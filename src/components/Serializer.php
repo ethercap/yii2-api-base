@@ -201,7 +201,7 @@ class Serializer extends BaseSerializer
                 $this->typeCastClass::cast($type, $attribute['value']);
             }
 
-            if (is_numeric($i)) {
+            if (is_numeric($i) && $key) {
                 $ret[$key] = $this->useModelResponse ? $attribute : $attribute['value'];
             } else {
                 $ret[$i] = $this->useModelResponse ? $attribute : $attribute['value'];
