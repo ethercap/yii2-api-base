@@ -3,7 +3,6 @@
 namespace ethercap\apiBase\components;
 
 use ethercap\apiBase\components\responseTemplates\BlockTpl;
-use ethercap\apiBase\components\responseTemplates\FaasTpl;
 use ethercap\apiBase\components\responseTemplates\NoBlockTpl;
 use ethercap\apiBase\components\responseTemplates\TemplateManager;
 use Yii;
@@ -16,9 +15,11 @@ use ethercap\apiBase\components\json\Formatter;
  * @package ethercap\apiBase\components
  *
  * @property TemplateManager $tm
+ * @property string $id
  */
 class ResBuilder extends Component
 {
+    public $renderPartial;
     public $rtData;
     public $errorHandler;
     public $templates = [];
@@ -36,16 +37,28 @@ class ResBuilder extends Component
         'noBlock' => [
             'class' => NoBlockTpl::class,
         ],
-        'faas' => [
-            'class' => FaasTpl::class,
-        ],
     ];
+
+    protected $_id;
+
+    public function getId()
+    {
+        if (!$this->_id) {
+            $this->_id = spl_object_hash($this);
+        }
+        return $this->_id;
+    }
 
     public function init()
     {
         parent::init();
         $this->tm = new TemplateManager();
         $this->initTemplates();
+    }
+
+    public function initErrorStack()
+    {
+        ResBuilderErrorStack::getInstance($this->id);
     }
 
     protected function initTemplates()
@@ -73,14 +86,21 @@ class ResBuilder extends Component
     {
         Yii::$app->response->formatters[Response::FORMAT_JSON] = Formatter::class;
         $this->processData();
-        if ($this->errorHandler && $this->_errorModels && is_callable($this->errorHandler)) {
-            return call_user_func($this->errorHandler, $this->getErrModel());
+        if ($this->errorHandler && is_callable($this->errorHandler)) {
+            if ($this->id == ResBuilderErrorStack::getInstance($this->id)->creator) {
+                $error = clone ResBuilderErrorStack::getInstance($this->id);
+                ResBuilderErrorStack::getInstance($this->id)->clear();
+                return call_user_func($this->errorHandler, $error, $this);
+            }
+        }
+        if ($this->renderPartial) {
+            return $this->rtData;
         }
         return $this->tm->loadBuilder($this)->getRes();
     }
 
     /**
-     * @param null  $value
+     * @param null $value
      * @param array $default
      * @return Value|null
      */
@@ -94,8 +114,8 @@ class ResBuilder extends Component
     }
 
     /**
-     * @param null  $key
-     * @param null  $value
+     * @param null $key
+     * @param null $value
      * @param array $default
      * @return Value|null
      */
@@ -112,11 +132,7 @@ class ResBuilder extends Component
 
     public function getErrModel()
     {
-        if ($this->_errModel !== null) {
-            return $this->_errModel;
-        }
-        $this->_errModel = reset($this->_errorModels);
-        return $this->_errModel;
+        return ResBuilderErrorStack::getInstance($this->id)->getErrorModel();
     }
 
     protected function processData()
@@ -153,11 +169,16 @@ class ResBuilder extends Component
 
     public function pushError($model)
     {
-        array_push($this->_errorModels, $model);
+        return ResBuilderErrorStack::getInstance($this->id)->pushError($model);
     }
 
     public function hasError()
     {
-        return (bool) count($this->_errorModels);
+        return ResBuilderErrorStack::getInstance($this->id)->hasError();
+    }
+
+    public function __clone()
+    {
+        $this->_id = null;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace ethercap\apiBase\components\responseTemplates;
 
+use ethercap\apiBase\components\ResBuilderErrorStack;
 use yii\base\BaseObject;
 use ethercap\common\helpers\SysMsg;
 
@@ -24,8 +25,10 @@ class BlockTpl extends BaseObject implements ITemplate
 
     public function getRes()
     {
-        if ($this->builder->hasError()) {
-            return SysMsg::getErrData($this->builder->getErrModel());
+        if ($this->builder->hasError() && ResBuilderErrorStack::getInstance($this->builder->id)->creator == $this->builder->id) {
+            $errorModel = $this->builder->getErrModel();
+            ResBuilderErrorStack::getInstance($this->builder->id)->clear();
+            return SysMsg::getErrData($errorModel);
         }
 
         $ret = $this->template;

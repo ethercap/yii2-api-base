@@ -5,6 +5,7 @@ namespace ethercap\apiBase;
 use yii\di\Instance;
 use ethercap\apiBase\components\ResBuilder;
 use yii\base\ViewRenderer as BaseViewRenderer;
+use yii\helpers\ArrayHelper;
 
 /**
  * Api ViewRenderer
@@ -15,6 +16,9 @@ use yii\base\ViewRenderer as BaseViewRenderer;
  */
 class ViewRenderer extends BaseViewRenderer
 {
+    /**
+     * @var View
+     */
     public $view;
 
     public $resBuilder = ResBuilder::class;
@@ -40,6 +44,8 @@ class ViewRenderer extends BaseViewRenderer
     {
         $this->view = $view;
         $res = clone $this->_resBuilder;
+        $res->initErrorStack();
+        $res->renderPartial = ArrayHelper::remove($params, '_renderApiPartial');
         return $this->renderApiFile($viewFile, $params, $res);
     }
 
