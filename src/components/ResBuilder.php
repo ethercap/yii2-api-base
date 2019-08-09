@@ -44,7 +44,7 @@ class ResBuilder extends Component
     public function getId()
     {
         if (!$this->_id) {
-            $this->_id = spl_object_id($this);
+            $this->_id = spl_object_hash($this);
         }
         return $this->_id;
     }
@@ -52,9 +52,13 @@ class ResBuilder extends Component
     public function init()
     {
         parent::init();
-        ResBuilderErrorStack::getInstance($this->id);
         $this->tm = new TemplateManager();
         $this->initTemplates();
+    }
+
+    public function initErrorStack()
+    {
+        ResBuilderErrorStack::getInstance($this->id);
     }
 
     protected function initTemplates()
@@ -128,7 +132,7 @@ class ResBuilder extends Component
 
     public function getErrModel()
     {
-        ResBuilderErrorStack::getInstance($this)->getErrorModel();
+        return ResBuilderErrorStack::getInstance($this->id)->getErrorModel();
     }
 
     protected function processData()
@@ -165,11 +169,16 @@ class ResBuilder extends Component
 
     public function pushError($model)
     {
-        ResBuilderErrorStack::getInstance($this->id)->pushError($model);
+        return ResBuilderErrorStack::getInstance($this->id)->pushError($model);
     }
 
     public function hasError()
     {
-        ResBuilderErrorStack::getInstance($this->id)->hasError();
+        return ResBuilderErrorStack::getInstance($this->id)->hasError();
+    }
+
+    public function __clone()
+    {
+        $this->_id = null;
     }
 }

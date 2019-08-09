@@ -16,6 +16,9 @@ use yii\helpers\ArrayHelper;
  */
 class ViewRenderer extends BaseViewRenderer
 {
+    /**
+     * @var View
+     */
     public $view;
 
     public $resBuilder = ResBuilder::class;
@@ -41,6 +44,7 @@ class ViewRenderer extends BaseViewRenderer
     {
         $this->view = $view;
         $res = clone $this->_resBuilder;
+        $res->initErrorStack();
         $res->renderPartial = ArrayHelper::remove($params, '_renderApiPartial');
         return $this->renderApiFile($viewFile, $params, $res);
     }

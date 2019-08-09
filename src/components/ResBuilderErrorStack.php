@@ -39,7 +39,9 @@ class ResBuilderErrorStack extends Component
 
     public function pushError($errorModels)
     {
-        $errorModels = (array) $errorModels;
+        if (!is_array($errorModels)) {
+            $errorModels = [$errorModels];
+        }
         return array_push($this->_stack, ...$errorModels);
     }
 
