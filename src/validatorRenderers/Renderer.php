@@ -39,10 +39,13 @@ class Renderer extends Component
         ) {
             return [];
         }
-        $res = [
+        $when = $validator->when === null || call_user_func($validator->when, $model, $field);
+        $res = $when ? [
             'type' => self::getType($validator),
             'options' => $validator->getClientOptions($model, $field),
-        ];
+            'skipOnError' => $validator->skipOnError,
+            'skipOnEmpty' => $validator->skipOnEmpty,
+        ] : [];
         if ($validator instanceof RangeValidator) {
             if (method_exists($model, 'dict') && $dict = $model->dict($field)) {
                 $res['dict'] = $dict;
