@@ -3,17 +3,17 @@
 namespace ethercap\apiBase\components;
 
 use ethercap\apiBase\components\typeCast\JsonTypeCast;
+use ethercap\common\helpers\SysMsg;
 use Yii;
-use yii\data\Sort;
-use yii\helpers\ArrayHelper;
-use yii\rest\Serializer as BaseSerializer;
+use yii\base\Arrayable;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
-use yii\base\Arrayable;
+use yii\data\Sort;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Inflector;
 use yii\i18n\Formatter;
+use yii\rest\Serializer as BaseSerializer;
 use yii\web\Link;
-use ethercap\common\helpers\SysMsg;
 
 class Serializer extends BaseSerializer
 {
@@ -66,7 +66,7 @@ class Serializer extends BaseSerializer
         return $models;
     }
 
-    protected function serializeModel($model)
+    public function serializeModel($model)
     {
         return $this->normalizeAttributes($model);
     }
@@ -212,7 +212,8 @@ class Serializer extends BaseSerializer
 
     protected function addConfig()
     {
-        return ($this->addConfigParam && Yii::$app->request->get($this->addConfigParam) && $this->canAddConfig) || ($this->addConfig && $this->canAddConfig);
+        $paramConfig = Yii::$app->request->isConsoleRequest ? false : Yii::$app->request->get($this->addConfigParam);
+        return ($this->addConfigParam && $paramConfig && $this->canAddConfig) || ($this->addConfig && $this->canAddConfig);
     }
 
     protected function serializePagination($pagination)
